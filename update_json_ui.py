@@ -19,9 +19,9 @@ def ui():
             user_input = raw_input(prompt + "\nEnter y or n")
             user_input = user_input.strip().lower()
             if user_input == "y":
-                return 0
+                return True
             elif user_input == "n":
-                return 1
+                return False
             else:
                 print("Invalid answer. y or n only.")
 
@@ -40,7 +40,7 @@ def ui():
         if user_input == "1":
             channel_label = raw_input("Enter arbitrary Channel Label\n")
             channel_id = raw_input("Enter Channel ID\n")
-            if yes_or_no("\nIs this correct?\nLabel: {}\nID: {}".format(channel_label, channel_id)) == 0:
+            if yes_or_no("\nIs this correct?\nLabel: {}\nID: {}".format(channel_label, channel_id)):
                 add_key_value_pair("channelIDs", channel_label, channel_id, channel_id_json)
 
         elif user_input == "2":
@@ -48,7 +48,7 @@ def ui():
             channel_label = raw_input("Enter arbitrary Role Label\n")
             channel_id = raw_input("Enter Role ID\n")
 
-            if yes_or_no("\nIs this correct?\nLabel: {}\nID: {}".format(channel_label, channel_id)) == 0:
+            if yes_or_no("\nIs this correct?\nLabel: {}\nID: {}".format(channel_label, channel_id)):
                 if check_if_group_exists(group_name):
                     add_key_value_pair(group_name, channel_label, channel_id, role_id_json)
                 else:
@@ -58,7 +58,7 @@ def ui():
                     print("\nAvailable groups:")
                     for key in binds_json:
                         print(key)
-                    return
+
         elif user_input == "3":
             update_channel_bind_ids.main()
             update_group_role_ids.main()
@@ -73,7 +73,7 @@ def ui():
                 print(key)
 
             channel_label = raw_input("Enter label to delete\n")
-            if yes_or_no("\nIs this correct?\nLabel: {}".format(channel_label)) == 0:
+            if yes_or_no("\nIs this correct?\nLabel: {}".format(channel_label)):
                 channel_label = channel_label.strip()
                 try:
                     remove_key_value_pair("channelIDs", channel_label, channel_id_json)
@@ -94,7 +94,7 @@ def ui():
                 channel_label = raw_input("Enter Role Label to delete (exact match)\n")
                 channel_label = channel_label.strip()
 
-                if yes_or_no("\nIs this correct?\nLabel: {}".format(channel_label)) == 0:
+                if yes_or_no("\nIs this correct?\nLabel: {}".format(channel_label)):
                     try:
                         remove_key_value_pair(group_name, channel_label, role_id_json)
                     except KeyError:
